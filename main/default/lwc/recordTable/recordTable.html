@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Contact List" icon-name="standard:contact_list">
+        <!--  account lookup / use record edit form where object = Contact and field = accountId-->
+        <div class="slds-m-around_large">
+            <lightning-record-edit-form object-api-name="Contact">
+                <lightning-input-field field-name="AccountId" onchange={fetchContacts}></lightning-input-field>
+            </lightning-record-edit-form>
+            <!-- add if condition to check accountid is not null -->
+            <!-- add if condition to check size of contact list > 0-->
+            <template if:true={accountId}>
+                <template if:true={isCntactsAvailable}>
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={allContact} 
+                        columns={columns} 
+                        hide-checkbox-column="true"
+                        show-row-number-column="true" 
+                        onrowaction={handleRowAction} 
+                        onsave={handleSave}>
+                    </lightning-datatable>
+                </template>
+                <!-- add if condition to check size of contact list < 0 -->
+                <!-- Show message that : There is not Contact in this Account-->
+                <template if:false={isCntactsAvailable}>
+                    <p class="slds-p-horizontal_medium">There are no contacts in this account.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
